@@ -5,6 +5,9 @@
  */
 package balltask;
 
+import balltask.connection.Channel;
+import balltask.connection.ClientConnect;
+import balltask.connection.ServerConnect;
 import javax.swing.JFrame;
 
 public class BallTask extends JFrame {
@@ -20,7 +23,10 @@ public class BallTask extends JFrame {
     private static Thread serverThread;
     private static ClientConnect cc = new ClientConnect();
     private static Thread clientThread;
-
+    public static Channel handler = new Channel();
+    public static Thread handlerThread;
+    
+    
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,14 +40,15 @@ public class BallTask extends JFrame {
         BallTask.viewerThread = new Thread(BallTask.cv);
         BallTask.viewerThread.start();
 
-        /*
-        
+
         BallTask.serverThread = new Thread(BallTask.sc);
         BallTask.serverThread.start();
 
         BallTask.clientThread = new Thread(BallTask.cc);
         BallTask.clientThread.start();
-*/
+
+        BallTask.handlerThread = new Thread(BallTask.handler);
+        BallTask.handlerThread.start();
     }
     
     public static Ball canTheBallMove(Ball ball){
